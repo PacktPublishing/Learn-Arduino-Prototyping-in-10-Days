@@ -1,6 +1,6 @@
 // Include the software serial library
 // Alternately you can directly use the hardware serial
-// via (Arduino’s digital pins D0 and D1)
+// via (Arduinoï¿½s digital pins D0 and D1)
 #include <SoftwareSerial.h>
 
 // Define the two pins that will be connected
@@ -19,6 +19,10 @@
 // from the Arduino board to the modem in the GSM module
 // SYNTAX: SoftwareSerial obj(Arduino_Rx, Arduino_Tx)
 SoftwareSerial GSM_SIM800(SIM800_TXD, SIM800_RXD);
+
+// The number 1234567890 shown below
+// should be replaced with the number to be called
+String phoneNumber = "8697737820";
 
 //Initialize the sketch for using the GSM module
 void setup()
@@ -41,14 +45,14 @@ void loop()
   // read a character from the Serial Monitor window
   char ch = Serial.read();
   
-  // if the character ‘a’ is entered
+  // if the character a is entered
   if (ch == 'a')
   {
     // invoke function to send an SMS
     sendAlertSMS();
   }
 
-  // if the character ‘b’ is entered
+  // if the character b is entered
   if (ch == 'b')
   {
     // invoke the function to dial a phone number
@@ -62,30 +66,30 @@ void sendAlertSMS()
     Serial.println("Sending SMS...");
      
     // Issue AT command to set SMS format to ASCII characters
-    GSM_SIM800.write("AT+CMGF=1\r\n");
+    GSM_SIM800.print("AT+CMGF=1\r\n");
     delay(1000);
    
     // Issue an AT command to send a new SMS to a phone number
-    GSM_SIM800.write("AT+CMGS=\"1234567890\"\r\n");
+    GSM_SIM800.print("AT+CMGS=\"" + phoneNumber + "\"\r\n");
     delay(1000);
      
     // Next step is to send SMS content to the modem
     // Note that this step does not use a separate AT command
-    GSM_SIM800.write("This is an SMS");
+    GSM_SIM800.print("This is an SMS");
     delay(1000);
      
     // The last AT command is to
     // send Ctrl+Z /ESC character sequence
     // to indicate to the GSM modem
     // that the SMS message is complete
-    GSM_SIM800.write((char)26);
+    GSM_SIM800.print((char)26);
     delay(2000);
 
     // Get results of sending SMS
     // Print the results in the Serial Monitor window
     if(GSM_SIM800.available())
     {
-      Serial.write(GSM_SIM800.read());
+      Serial.println(GSM_SIM800.read());
     }
   }
 
@@ -94,12 +98,12 @@ void callNumber()
 {
    // Send AT command TD to the GSM modem
    // along with the number to be called
-   // The number 1234567890 shown below
-   // should be replaced with the number to be called
-   GSM_SIM800.print("ATD1234567890;" );
+   Serial.println("Calling...");
+   GSM_SIM800.print("ATD" + phoneNumber + ";\r\n" );
+   
    // wait 10 seconds before the next loop
-   delay(10000);
+   delay(15000);
 
    // Issue an AT command to the GSM modem to disconnect the call
-   GSM_SIM800.print("ATH" ); 
+   GSM_SIM800.print("ATH\r\n"); 
 }
