@@ -49,7 +49,7 @@ bool readFireDetector()
   // Most often it would be reading the value of a digital
   // or analog pin using digitalRead() or analogRead() functions
 
-  // Uncomment the following sample lines during implementation
+  // Use the following sample lines during implementation
   // Assuming the fire detector output is connected to D5
   // ----------------------------------------------------------
   int fireDetectorOutputPin = 5;
