@@ -35,7 +35,7 @@ void setup()
   // for communication with the GSM modem
   GSM_SIM800.begin(9600);
   
-  // Wait for 3 seconds for the SIM800 module to initialize
+  // Wait for 3 seconds for the SIM800 module to initialize 
   delay(3000);
 }
 
