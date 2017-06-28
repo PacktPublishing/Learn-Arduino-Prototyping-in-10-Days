@@ -22,7 +22,7 @@ SoftwareSerial GSM_SIM800(SIM800_TXD, SIM800_RXD);
 
 // The number 1234567890 shown below
 // should be replaced with the number to be called
-String phoneNumber = "8697737820";
+String phoneNumber = "1234567890";
 
 //Initialize the sketch for using the GSM module
 void setup()
